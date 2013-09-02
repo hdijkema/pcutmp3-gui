@@ -2,11 +2,15 @@ package de.zebee.mpa;
 
 import java.util.ArrayList;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Cue {
 
     private String           performer;
     private String           title;
     private ArrayList<Track> tracks;
+    private ObservableList<Track> o_tracks;
 
     private String           pathToMP3;
 
@@ -14,6 +18,7 @@ public class Cue {
 
     public Cue() {
         tracks = new ArrayList<Track>(40);
+        o_tracks = FXCollections.observableArrayList(tracks);
     }
 
     public Cue(String performer, String title, String album) {
@@ -21,23 +26,38 @@ public class Cue {
         this.performer = performer;
         this.title = title;
     }
+    
+    public void clear() {
+    	o_tracks.clear();
+    	title = "";
+    	performer = "";
+    }
+    
+    public ObservableList<Track> getObservable() {
+    	return o_tracks;
+    }
 
     public void addTrack(int trackNumber, Track t) {
         if (trackNumber >= 1)
-            tracks.add(trackNumber - 1, t);
+            o_tracks.add(trackNumber - 1, t);
+        
+        int i;
+        for(i = 0; i < o_tracks.size(); i++) {
+        	o_tracks.get(i).setTrackNumber(i+1);
+        }
     }
 
     public void fillOutEndTrackSectors() {
 
         for (int i = 0; i < tracks.size() - 1; i++) {
             long endSector = tracks.get(i + 1).getStartSector();
-            tracks.get(i).setEndSector(endSector);
+            o_tracks.get(i).setEndSector(endSector);
         }
 
     }
 
     public int getNumberTracks() {
-        return tracks.size();
+        return o_tracks.size();
     }
 
     public String getPathToMP3() {
@@ -57,7 +77,7 @@ public class Cue {
     }
 
     public Track getTrack(int trackNumber) {
-        return tracks.get(trackNumber);
+        return o_tracks.get(trackNumber);
     }
 
     public void setPathToMP3(String pathToMP3) {

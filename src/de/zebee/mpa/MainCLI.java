@@ -246,7 +246,7 @@ public class MainCLI {
                     long emp = cueFile.getTrack(i).getEndSector();
                     long emp1 = toSampleRate(emp);
                     cueFile.getTrack(i).setEndSector(emp1);
-                    ;
+                    
                     _reporter.println("Start sector: smp = " + smp + ", smp1 = " + smp1);
                     _reporter.println("End sector  : emp = " + emp + ", emp1 = " + emp1);
                 }
@@ -412,11 +412,12 @@ public class MainCLI {
     }
 
     public Cue loadCUE(String cueFilename, long sampleCount) throws IOException {
+    	Cue cue = new Cue();
+    	cue.setSampleCount(sampleCount);
+    	return loadCUE(cueFilename, cue);
+    }
 
-        Cue cue = new Cue();
-
-        cue.setSampleCount(sampleCount);
-
+    public Cue loadCUE(String cueFilename, Cue cue) throws IOException {
         FileInputStream fips = new FileInputStream(cueFilename);
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(fips));
@@ -500,13 +501,15 @@ public class MainCLI {
                         else if (token.equals("index")) {
                             try {
                                 int idx = Integer.parseInt(st.nextToken());
-                                long smp1 = MSFstring2sector(st.nextToken()) * 588L;
+                                String tok = st.nextToken();
+                                long smp1 = MSFstring2sector(tok) * 588L;
                                 long smp = toSampleRate(smp1);
                                 _reporter.println("smp(588) = " + smp1 + ", smp = " + smp);
                                 if (idx == 1) {
 
                                     if (currentTrack != null) {
                                         currentTrack.setStartSector(smp);
+                                        currentTrack.setLength(tok);
                                     }
 
                                 }

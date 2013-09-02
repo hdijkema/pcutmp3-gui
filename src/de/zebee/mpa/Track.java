@@ -1,23 +1,33 @@
 package de.zebee.mpa;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 public class Track {
 
-    private String performer;
-    private String title;
-    private int    trackNumber;
+    private final SimpleStringProperty performer;
+    private final SimpleStringProperty title;
+    private final SimpleIntegerProperty trackNumber;
+    private final SimpleStringProperty album;
+    private final SimpleStringProperty length;
 
     private long   startSector;
-
     private long   endSector;
 
     public Track() {
-        performer = "Unknown Artist";
-
+    	performer = new SimpleStringProperty("");
+    	title = new SimpleStringProperty();
+    	trackNumber = new SimpleIntegerProperty();
+    	album = new SimpleStringProperty();
+    	length = new SimpleStringProperty();
     }
 
     public Track(String performer, String title, String album) {
-        this.performer = performer;
-        this.title = title;
+    	this.performer = new SimpleStringProperty(performer);
+    	this.title = new SimpleStringProperty(title);
+    	this.album = new SimpleStringProperty(album);
+    	this.length = new SimpleStringProperty();
+    	trackNumber = new SimpleIntegerProperty();
     }
 
     public long getEndSector() {
@@ -25,7 +35,7 @@ public class Track {
     }
 
     public String getPerformer() {
-        return this.performer;
+        return this.performer.get();
     }
 
     public long getStartSector() {
@@ -33,11 +43,19 @@ public class Track {
     }
 
     public String getTitle() {
-        return this.title;
+        return this.title.get();
     }
 
     public int getTrackNumber() {
-        return trackNumber;
+        return trackNumber.get();
+    }
+    
+    public String getLength() {
+    	return this.length.get();
+    }
+    
+    public void setLength(String s) {
+    	this.length.set(s);;
     }
 
     public void setEndSector(long endSector) {
@@ -45,7 +63,7 @@ public class Track {
     }
 
     public void setPerformer(String performer) {
-        this.performer = performer;
+        this.performer.set(performer);
     }
 
     public void setStartSector(long startSector) {
@@ -53,13 +71,13 @@ public class Track {
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.title.set(title);
     }
 
     public void setTrackNumber(int trackNumber) {
-        this.trackNumber = trackNumber;
-        if (title == null) {
-            title = "Track " + trackNumber;
+        this.trackNumber.set(trackNumber);
+        if (title.get() == null) {
+            title.set("Track " + trackNumber);
         }
     }
 
