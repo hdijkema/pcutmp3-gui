@@ -90,19 +90,19 @@ public class PCutMP3Gui extends Application
 		});
 
 		TableColumn col_title = new TableColumn<Track, String>("Title");
-		col_title.setMinWidth(100);
+		col_title.setMinWidth(250);
 	    col_title.setCellValueFactory(new PropertyValueFactory<Track, String>("title"));
 
 	    TableColumn col_performer = new TableColumn<Track, String>("Performer");
-		col_performer.setMinWidth(100);
+		col_performer.setMinWidth(150);
 	    col_performer.setCellValueFactory(new PropertyValueFactory<Track, String>("performer"));
 	    
-	    TableColumn col_length = new TableColumn<Track, String>("Split Point");
-	    col_length.setMinWidth(100);
-	    col_length.setCellValueFactory(new PropertyValueFactory<Track, String>("length"));;
+	    TableColumn col_point = new TableColumn<Track, String>("Split Point");
+	    col_point.setMinWidth(75);
+	    col_point.setCellValueFactory(new PropertyValueFactory<Track, String>("point"));;
 		
 		_table.setItems(_cue.getObservable());
-		_table.getColumns().addAll(col_tracknumber, col_title, col_performer, col_length);
+		_table.getColumns().addAll(col_tracknumber, col_title, col_performer, col_point);
 		
 		_table.setEditable(true);
 		//TextFieldTableCell<Track, String> tftc = new TextFieldTableCell<Track, String>();
@@ -122,11 +122,11 @@ public class PCutMP3Gui extends Application
 					}
 				}
 		);
-		col_length.setCellFactory(TextFieldTableCell.forTableColumn());
-		col_length.setOnEditCommit(
+		col_point.setCellFactory(TextFieldTableCell.forTableColumn());
+		col_point.setOnEditCommit(
 				new EventHandler<CellEditEvent<Track, String>>() {
 					public void handle(CellEditEvent<Track, String> t) {
-						((Track) t.getTableView().getItems().get(t.getTablePosition().getRow())).setLength(t.getNewValue());
+						((Track) t.getTableView().getItems().get(t.getTablePosition().getRow())).setPoint(t.getNewValue());
 					}
 				}
 		);
@@ -189,6 +189,8 @@ public class PCutMP3Gui extends Application
 		Label lperformer = new Label("Performer: ");
 		_title = new TextField();
 		_performer = new TextField();
+		_title.setMinWidth(400);
+		_performer.setMinWidth(400);
 		GridPane grid = new GridPane();
 		grid.setHgap(10);
 		grid.setVgap(10);
@@ -324,11 +326,11 @@ public class PCutMP3Gui extends Application
 		int row = _table.getSelectionModel().getSelectedIndex();
 		if (row >= 0) {
 			Track t = new Track();
-			t.setLength("01:00:00");			
+			t.setPoint("01:00:00");			
 			_cue.addTrack(row + 2, t);
 		} else {
 			Track t = new Track();
-			t.setLength("01:00:00");
+			t.setPoint("01:00:00");
 			_cue.addTrack(_cue.getNumberTracks() + 1, t);
 		}
 	}
@@ -337,7 +339,7 @@ public class PCutMP3Gui extends Application
 		int row = _table.getSelectionModel().getSelectedIndex();
 		if (row >= 0) {
 			Track t = new Track();
-			t.setLength("01:00:00");
+			t.setPoint("01:00:00");
 			_cue.addTrack(row + 1, t);
 		}
 	}

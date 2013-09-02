@@ -9,7 +9,7 @@ public class Track {
     private final SimpleStringProperty title;
     private final SimpleIntegerProperty trackNumber;
     private final SimpleStringProperty album;
-    private final SimpleStringProperty length;
+    private final SimpleStringProperty point;
 
     private long   startSector;
     private long   endSector;
@@ -19,14 +19,14 @@ public class Track {
     	title = new SimpleStringProperty();
     	trackNumber = new SimpleIntegerProperty();
     	album = new SimpleStringProperty();
-    	length = new SimpleStringProperty();
+    	point = new SimpleStringProperty();
     }
 
     public Track(String performer, String title, String album) {
     	this.performer = new SimpleStringProperty(performer);
     	this.title = new SimpleStringProperty(title);
     	this.album = new SimpleStringProperty(album);
-    	this.length = new SimpleStringProperty();
+    	this.point = new SimpleStringProperty();
     	trackNumber = new SimpleIntegerProperty();
     }
 
@@ -50,12 +50,12 @@ public class Track {
         return trackNumber.get();
     }
     
-    public String getLength() {
-    	return this.length.get();
+    public String getPoint() {
+    	return this.point.get();
     }
     
-    public void setLength(String s) {
-    	this.length.set(s);;
+    public void setPoint(String s) {
+    	this.point.set(s);;
     }
 
     public void setEndSector(long endSector) {

@@ -509,7 +509,7 @@ public class MainCLI {
 
                                     if (currentTrack != null) {
                                         currentTrack.setStartSector(smp);
-                                        currentTrack.setLength(tok);
+                                        currentTrack.setPoint(tok);
                                     }
 
                                 }

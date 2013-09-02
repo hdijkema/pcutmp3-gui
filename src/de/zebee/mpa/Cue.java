@@ -129,7 +129,7 @@ public class Cue {
 			if (!t.getPerformer().trim().equals("")) {
 				wrt.write("    PERFORMER \"" + t.getPerformer().trim() + "\"\n");
 			}
-			wrt.write("    INDEX 01 " + t.getLength() + "\n");
+			wrt.write("    INDEX 01 " + t.getPoint() + "\n");
 		}
 		wrt.close();
 	}
