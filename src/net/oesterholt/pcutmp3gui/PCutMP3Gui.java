@@ -271,6 +271,13 @@ public class PCutMP3Gui extends Application
 				save(null);
 			}
 		});
+		
+		MenuItem splititem = new MenuItem("Save & Split!");
+		splititem.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent e) {
+				split();
+			}
+		});
 		MenuItem quit = new MenuItem("Quit");
 		quit.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
@@ -282,7 +289,7 @@ public class PCutMP3Gui extends Application
 				System.exit(0);
 			}
 		});
-	    file.getItems().addAll(open, save, saveas, new SeparatorMenuItem(), quit);
+	    file.getItems().addAll(open, save, saveas, new SeparatorMenuItem(), splititem, new SeparatorMenuItem(), quit);
 	    bar.getMenus().addAll(file);
 	    
 	    _result = new TextArea();
