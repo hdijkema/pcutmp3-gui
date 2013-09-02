@@ -12,6 +12,7 @@ import de.zebee.mpa.Cue;
 import de.zebee.mpa.MainCLI;
 import de.zebee.mpa.Track;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -20,6 +21,8 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,10 +32,12 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -41,6 +46,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -56,6 +62,7 @@ public class PCutMP3Gui extends Application
 	private String			 _mp3Path;
 	private Cue              _cue;
 	private File			 _cueFile; 
+	private TextArea  		 _result;
 	
 	public void init() throws Exception {
 		// create ui
@@ -195,6 +202,7 @@ public class PCutMP3Gui extends Application
 		_title.setMinWidth(400);
 		_performer.setMinWidth(400);
 		GridPane grid = new GridPane();
+		grid.setPadding(new Insets(10, 10, 10, 10));
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.add(ltitle, 0, 0);
@@ -276,10 +284,16 @@ public class PCutMP3Gui extends Application
 		});
 	    file.getItems().addAll(open, save, saveas, new SeparatorMenuItem(), quit);
 	    bar.getMenus().addAll(file);
+	    
+	    _result = new TextArea();
+	    
+	    SplitPane splitp = new SplitPane();
+	    splitp.setOrientation(Orientation.VERTICAL);
+	    splitp.getItems().addAll(_table, _result);
 
 		VBox box = new VBox();
 		box.setSpacing(5);
-		box.getChildren().addAll(bar, grid, hbox, _table);
+		box.getChildren().addAll(bar, grid, hbox, splitp);
 		
 
 		{
@@ -365,23 +379,33 @@ public class PCutMP3Gui extends Application
 	
 	private void split() {
 		save(_cueFile);
-		final StringBuffer sa = new StringBuffer();
-		MainCLI cli = new MainCLI(new MainCLI.Report() {
-			public void println(String msg) {
-				sa.append(msg);
-				sa.append("\n");
-			}
-		});
-		String [] args = {  "--cue", _cueFile.getAbsolutePath(), 
-							"--dir", _cueFile.getParentFile().getAbsolutePath(), 
-							"--out", "%n_" + _performer.getText().trim() + "_" + _title.getText().trim() + "_%t" 
-							};
-		try {
-			cli.run(args);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		System.out.println(sa.toString());
+		_result.clear();
+		new Thread(new Runnable() {
+		    public void run() {
+				//final StringBuffer sa = new StringBuffer();
+				MainCLI cli = new MainCLI(new MainCLI.Report() {
+					public void println(String msg) {
+						final String M = msg;
+						Platform.runLater(new Runnable() {
+							public void run() {
+								_result.appendText(M + "\n");
+							}
+						});
+						//sa.append(msg);
+						//sa.append("\n");
+					}
+				});
+				String [] args = {  "--cue", _cueFile.getAbsolutePath(), 
+									"--dir", _cueFile.getParentFile().getAbsolutePath(), 
+									"--out", "%n_" + _performer.getText().trim() + "_" + _title.getText().trim() + "_%t" 
+									};
+				try {
+					cli.run(args);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		    }
+		}).start();
 	}
 
 	public static void main(String[] args) { 
