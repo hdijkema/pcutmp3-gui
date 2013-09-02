@@ -10,4 +10,7 @@ didn't have a GUI for editing CueSheets.
 
 This version does add such features.
 
+Download your Windows Installer here:
+
+https://github.com/hoesterholt/pcutmp3-gui/blob/master/Output/PCutMp3GUI_Setup.exe?raw=true
 
