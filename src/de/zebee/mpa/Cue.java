@@ -65,8 +65,8 @@ public class Cue {
 
     public void fillOutEndTrackSectors() {
 
-        for (int i = 0; i < tracks.size() - 1; i++) {
-            long endSector = tracks.get(i + 1).getStartSector();
+        for (int i = 0; i < o_tracks.size() - 1; i++) {
+            long endSector = o_tracks.get(i + 1).getStartSector();
             o_tracks.get(i).setEndSector(endSector);
         }
 

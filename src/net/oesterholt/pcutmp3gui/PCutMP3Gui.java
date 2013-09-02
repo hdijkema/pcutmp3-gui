@@ -97,7 +97,7 @@ public class PCutMP3Gui extends Application
 		col_performer.setMinWidth(100);
 	    col_performer.setCellValueFactory(new PropertyValueFactory<Track, String>("performer"));
 	    
-	    TableColumn col_length = new TableColumn<Track, String>("Length");
+	    TableColumn col_length = new TableColumn<Track, String>("Split Point");
 	    col_length.setMinWidth(100);
 	    col_length.setCellValueFactory(new PropertyValueFactory<Track, String>("length"));;
 		
@@ -326,6 +326,10 @@ public class PCutMP3Gui extends Application
 			Track t = new Track();
 			t.setLength("01:00:00");			
 			_cue.addTrack(row + 2, t);
+		} else {
+			Track t = new Track();
+			t.setLength("01:00:00");
+			_cue.addTrack(_cue.getNumberTracks() + 1, t);
 		}
 	}
 	
