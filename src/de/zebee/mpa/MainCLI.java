@@ -94,7 +94,8 @@ public class MainCLI {
     }
 
     public void run(String[] args) throws IOException {
-        _reporter.println("\nPCutMP3 -- Properly Cut MP3 v0.98 BETA\n");
+        _reporter.println("\nPCutMP3 -- Properly Cut MP3 v0.99 beta");
+        _reporter.println("  This version has been modified to deal with 48000Hz files properly\n");
 
         if (args == null || args.length < 1) {
             printHelp();
