@@ -1,8 +1,10 @@
 package net.oesterholt.pcutmp3gui;
 
 
+import java.awt.TrayIcon;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -34,6 +36,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -275,7 +278,7 @@ public class PCutMP3Gui extends Application
 	    bar.getMenus().addAll(file);
 
 		VBox box = new VBox();
-		box.setSpacing(5);;
+		box.setSpacing(5);
 		box.getChildren().addAll(bar, grid, hbox, _table);
 		
 
@@ -287,6 +290,15 @@ public class PCutMP3Gui extends Application
 			stage.setX(p.x());
 			stage.setY(p.y());
 			stage.show();	
+		}
+		
+		{
+			Image icon = new Image(
+					PCutMP3Gui.class.getResourceAsStream(
+							String.format("/net/oesterholt/pcutmp3gui/resources/%s.png","pcutmp3")
+					)
+					);
+    		stage.getIcons().add(icon);
 		}
 	}
 	
