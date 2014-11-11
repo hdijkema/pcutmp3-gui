@@ -12,7 +12,6 @@
             </manifest>
             <zipfileset src="jar-in-jar-loader.zip"/>
             <fileset dir="C:/Users/hans/workspace/pcutmp3-gui/bin"/>
-            <zipfileset dir="C:\Program Files\Java\jre7\lib" includes="jfxrt.jar"/>
             <zipfileset dir="C:\Users\hans\workspace\pcutmp3-gui\libraries" includes="jid3.jar"/>
         </jar>
     </target>
