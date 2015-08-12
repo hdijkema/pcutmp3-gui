@@ -179,8 +179,9 @@ public class PCutMP3Gui extends Application
 	              //Set extension filter
 	              FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("MP3 Files (*.mp3)", "*.mp3");
 	              fileChooser.getExtensionFilters().add(extFilter);
-	              if (p.getCueLoc() != null) {
-	            	  fileChooser.setInitialDirectory(new File(p.getCueLoc()));
+	              File prefLoc = new File(p.getCueLoc());
+	              if (prefLoc.exists()) {
+	            	  fileChooser.setInitialDirectory(prefLoc);
 	              }
 	             
 	              //Show open file dialog
@@ -226,8 +227,9 @@ public class PCutMP3Gui extends Application
 	              //Set extension filter
 	              FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CUE Files (*.cue)", "*.cue");
 	              fileChooser.getExtensionFilters().add(extFilter);
-	              if (p.getCueLoc() != null) {
-	            	  fileChooser.setInitialDirectory(new File(p.getCueLoc()));
+	              File prefLoc = new File(p.getCueLoc());
+	              if (prefLoc.exists()) {
+	            	  fileChooser.setInitialDirectory(prefLoc);
 	              }
 	             
 	              //Show open file dialog

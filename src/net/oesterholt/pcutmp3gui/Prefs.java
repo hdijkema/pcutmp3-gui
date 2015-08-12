@@ -51,7 +51,7 @@ public class Prefs {
 	}
 	
 	public String getCueLoc() {
-		return _prefs.get("cueloc", null);
+		return _prefs.get("cueloc", "");
 	}
 	
 	public void setCueLoc(String l) {
